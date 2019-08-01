@@ -1,26 +1,26 @@
-# MasterMind
+# MasterMind [![Build Status](https://travis-ci.org/ap7/MasterMind.svg?branch=master)](https://travis-ci.org/ap7/MasterMind)
 
 This repository host a test project for myself
 
-# Statement
+## Statement
 Task
 We would like you to create a simple Android app.
 
 The app should have two screens, as follows:
 
-Screen 1 should contain a list of photos. Tapping on a cell in the list, should take you to the second screen.
+**Screen 1** should contain a list of photos. Tapping on a cell in the list, should take you to the second screen.
 
-Screen 2 is the detail screen for the selected post. Details to be shown about each photos are:
+**Screen 2** is the detail screen for the selected post. Details to be shown about each photos are:
 
-> Photo thumbnail
 
-> Photo title
+- Photo thumbnail
+- Photo title
 
 You get all the data you want from the following API endpoints:
 
-GET https://jsonplaceholder.typicode.com/photos
+- GET https://jsonplaceholder.typicode.com/photos
 
-Task Guidelines
+### Task Guidelines
 Use of 3rd party libraries (and dependency management) is accepted and encouraged.
 You can either pick the route of implementing a simple architecture and focus more on the UI (animations, transitions etc), 
 or go for a simple UI and focus more on the architecture of the application. 
