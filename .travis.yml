@@ -13,7 +13,6 @@ licenses:
 before_install:
   - touch $HOME/.android/repositories.cfg
   - yes | sdkmanager "platforms;android-29"
-  - yes | sdkmanager "build-tools;29.0.9"
 before_script:
   - chmod +x gradlew
 script:
