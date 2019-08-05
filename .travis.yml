@@ -11,8 +11,10 @@ licenses:
   - android-sdk-license-.+
   - google-gdk-license-.+
 before_install:
-  - yes | sdkmanager "platforms;android-29"
-  - mkdir "$ANDROID_HOME/licenses" || true
+  - touch $HOME/.android/repositories.cfg
+  - yes | sdkmanager "platforms;android-28"
+  - yes | sdkmanager "build-tools;28.0.3"
+before_script:
   - chmod +x gradlew
 script:
   - ./gradlew build connectedCheck
