@@ -1,22 +1,3 @@
-Skip to content
-
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
-
-@ap7
-1,474
-18,217 5,767 google/iosched
- Code  Issues 20  Pull requests 12  Actions  Projects 0  Security  Insights
-iosched/gradlew
-@nickbutcher nickbutcher Update to gradle 4.5
-9b5cec6 on 26 Feb 2018
-@shailen @nickbutcher
-Executable File  173 lines (151 sloc)  5.17 KB
-
 #!/usr/bin/env sh
 
 ##############################################################################
@@ -95,12 +76,14 @@ if [ -n "$JAVA_HOME" ] ; then
     fi
     if [ ! -x "$JAVACMD" ] ; then
         die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
+
 Please set the JAVA_HOME variable in your environment to match the
 location of your Java installation."
     fi
 else
     JAVACMD="java"
     which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+
 Please set the JAVA_HOME variable in your environment to match the
 location of your Java installation."
 fi
@@ -187,3 +170,4 @@ if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
 fi
 
 exec "$JAVACMD" "$@"
+set fileformat=unix
