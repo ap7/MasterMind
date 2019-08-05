@@ -38,7 +38,7 @@ cache:
 
 
 script:
-  - ./gradlew test assembleRelease
+  - ./gradlew assembleDebug
 # [WIP] Run emulator for instrumented test (look for proper emulator)
 #  - android list targets
 #  - echo no | android create avd --force -n test -t "android-"$ANDROID_EMULATOR_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
