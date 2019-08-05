@@ -20,4 +20,4 @@ before_install:
   - yes | sdkmanager "platforms;android-29"
 
 script:
-  - ./gradlew assembleDebug
+  - TERM=dumb ./gradlew assembleDebug
