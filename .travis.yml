@@ -1,21 +1,38 @@
-language: android
-android:
-  components:
-    - tools # to get the new `repository-11.xml`
-    - tools # see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
-    - platform-tools
-    - build-tools-29.0.9
-    - android-29
-licenses:
-  - android-sdk-preview-license-.+
-  - android-sdk-license-.+
-  - google-gdk-license-.+
+sudo: required
+dist: trusty
+os: linux
+language: generic
+
+env:
+  - EMULATOR_VERSION=18 TARGET_VERSION=28 ABI="google_apis;armeabi-v7a" ANDROID_BUILD_TOOLS_VERSION=28.0.3 ADB_INSTALL_TIMEOUT=20 QEMU_AUDIO_DRV=none
+
 before_install:
-  - touch $HOME/.android/repositories.cfg
-  - yes | sdkmanager "platforms;android-29"
-before_script:
-  - chmod +x gradlew
+  - export ANDROID_HOME=~/android-sdk-linux
+  - wget -q "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip" -O android-sdk-tools.zip
+  - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
+  - rm android-sdk-tools.zip
+  - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+  - mkdir -p ~/.android
+  - touch ~/.android/repositories.cfg
+  - yes | sdkmanager --licenses
+  - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
+  - sdkmanager --list | head -15
+  - sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" "platforms;android-$TARGET_VERSION" > /dev/null
+  - sdkmanager "system-images;android-$EMULATOR_VERSION;$ABI" > /dev/null
+  - sdkmanager --list | head -15
+  - yes | sdkmanager "cmake;3.10.2.4988404"
+  - wget https://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip
+  - unzip android-ndk-r18b-linux-x86_64.zip -d $HOME > /dev/null
+  - export ANDROID_NDK_HOME=$HOME/android-ndk-r18b
+  - export PATH=$PATH:$ANDROID_NDK_HOME
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_VERSION;$ABI"
+
 script:
-  - ./gradlew clean
-  - ./gradlew assembleDebug
-  - ./gradlew assembleDebugAndroidTest
+  - ./gradlew assembleDebugAndroidTest -PdisablePreDex --continue --stacktrace
+  - $ANDROID_HOME/emulator/emulator -avd test -no-window &
+  - bash android-wait-for-emulator
+  - adb shell input keyevent 82
+  - ./gradlew connectedDebugAndroidTest -PdisablePreDex --continue --stacktrace
