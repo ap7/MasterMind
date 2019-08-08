@@ -8,11 +8,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
-        applicationId "fr.ap7.mastermind"
-        minSdkVersion 14
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        applicationId app.applicationId
+        minSdkVersion config.android.minSdk
+        targetSdkVersion config.android.targetSdk
+        versionCode app.versionCode
+        versionName app.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -21,15 +21,45 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility config.java
+        targetCompatibility config.java
+    }
+}
+
+androidExtensions {
+    experimental = true
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$config.kotlin"
+
+    //UI
+    implementation "androidx.recyclerview:recyclerview:$lib.ui.recyclerview"
+    implementation "com.google.android.material:material:$lib.ui.material"
+    implementation "androidx.constraintlayout:constraintlayout:$lib.ui.constraint"
     implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //Network - Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$lib.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$lib.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$lib.retrofit"
+
+    //Pattern - Rx
+    implementation "io.reactivex.rxjava2:rxjava:$lib.rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$lib.rxandroid"
+
+    //Injection - Koin
+    implementation "org.koin:koin-android:$lib.koin"
+
+    //Logging - Timber
+    implementation "com.jakewharton.timber:timber:$lib.timber"
+
+    //Test
+    testImplementation "androidx.test.ext:junit:$lib.test.junit"
+    testImplementation "io.mockk:mockk:$lib.test.mockk"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$lib.test.espresso"
+    androidTestImplementation "io.mockk:mockk-android:$lib.test.mockk"
 }
