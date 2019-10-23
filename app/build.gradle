@@ -4,9 +4,11 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.0"
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId app.applicationId
         minSdkVersion config.android.minSdk
@@ -26,10 +28,18 @@ android {
         sourceCompatibility config.java
         targetCompatibility config.java
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 androidExtensions {
     experimental = true
+}
+
+kapt {
+    generateStubs = true
 }
 
 dependencies {
@@ -40,12 +50,17 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$lib.ui.recyclerview"
     implementation "com.google.android.material:material:$lib.ui.material"
     implementation "androidx.constraintlayout:constraintlayout:$lib.ui.constraint"
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation "androidx.core:core-ktx:1.0.2"
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
+    // LiveData & ViewModel
+    implementation "android.arch.lifecycle:extensions:$lib.lifecycle_version"
 
     //Network - Retrofit
     implementation "com.squareup.retrofit2:retrofit:$lib.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$lib.retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$lib.retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$lib.retrofit"
 
     //Pattern - Rx
     implementation "io.reactivex.rxjava2:rxjava:$lib.rxjava"
@@ -54,8 +69,17 @@ dependencies {
     //Injection - Koin
     implementation "org.koin:koin-android:$lib.koin"
 
+    // Injection - Dagger 2
+    implementation "com.google.dagger:dagger:$lib.dagger2_version"
+    kapt "com.google.dagger:dagger-compiler:$lib.dagger2_version"
+    compileOnly "org.glassfish:javax.annotation:3.1.1"
+
     //Logging - Timber
     implementation "com.jakewharton.timber:timber:$lib.timber"
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:$lib.room"
+    kapt "android.arch.persistence.room:compiler:$lib.room"
 
     //Test
     testImplementation "androidx.test.ext:junit:$lib.test.junit"
