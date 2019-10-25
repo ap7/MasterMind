@@ -12,9 +12,20 @@ import fr.ap7.mastermind.R
 import fr.ap7.mastermind.databinding.ActivityPostListBinding
 import fr.ap7.mastermind.injection.ViewModelFactory
 
+/**
+ * Android view
+ *
+ * I Used Livedata thanks to data binding
+ *
+ * @author Ap7
+ */
 class PostListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostListBinding
+
+    // Provider to use this factory to instantiate the PostViewModel class
     private lateinit var viewModel: PostListViewModel
+
+    // Observe the value of errorMessage in the PostListActivity to display the SnackBar when it is not null, and hide it when the value is null
     private var errorSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +37,7 @@ class PostListActivity : AppCompatActivity() {
 
         viewModel =
             ViewModelProviders.of(this, ViewModelFactory(this)).get(PostListViewModel::class.java)
+
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) {
                 showError(errorMessage)

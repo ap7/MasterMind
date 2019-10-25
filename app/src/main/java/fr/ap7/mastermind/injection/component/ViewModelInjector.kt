@@ -6,6 +6,11 @@ import fr.ap7.mastermind.ui.PostListViewModel
 import fr.ap7.mastermind.ui.PostViewModel
 import javax.inject.Singleton
 
+/**
+ * Component providing inject() methods for presenters.
+ *
+ * @author Ap7
+ */
 @Singleton
 @Component(modules = [(NetworkModule::class)])
 interface ViewModelInjector {

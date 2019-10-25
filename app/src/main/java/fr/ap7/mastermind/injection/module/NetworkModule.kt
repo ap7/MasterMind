@@ -19,6 +19,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 // Safe here as we are dealing with a Dagger 2 module
 @Suppress("unused")
 object NetworkModule {
+
     /**
      * Provides the Post service implementation.
      * @param retrofit the Retrofit object used to instantiate the service

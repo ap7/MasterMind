@@ -7,12 +7,15 @@ import androidx.room.Room
 import fr.ap7.mastermind.model.database.AppDatabase
 import fr.ap7.mastermind.ui.PostListViewModel
 
-
+/**
+ * ViewModelFactory its a provider to instantiate the PostViewModel class
+ *
+ * @author Ap7
+ */
 class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PostListViewModel::class.java)) {
-            val db =
-                Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "posts")
+            val db = Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "posts")
                     .build()
             @Suppress("UNCHECKED_CAST")
             return PostListViewModel(db.postDao()) as T

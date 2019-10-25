@@ -8,6 +8,11 @@ import fr.ap7.mastermind.R
 import fr.ap7.mastermind.databinding.ItemPostBinding
 import fr.ap7.mastermind.model.Post
 
+/**
+ * PostListAdapter
+ *
+ * @author Ap7
+ */
 class PostListAdapter : RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
     private lateinit var postList:List<Post>
 
